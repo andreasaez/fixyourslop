@@ -1,7 +1,9 @@
 document.documentElement.classList.add('js');
 
+var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 var heroLoop = document.getElementById('heroLoop');
-if (heroLoop && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+if (heroLoop && prefersReducedMotion) {
   heroLoop.removeAttribute('autoplay');
   heroLoop.pause();
 }
