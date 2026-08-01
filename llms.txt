@@ -1,0 +1,19 @@
+# Fix Your Slop
+
+> Fix Your Slop is the AI Slop Cleanup Crew: a content cleanup service that edits and rewrites AI-generated marketing copy so it sounds specific, human, and on-brand instead of generic. Founded by Andrea Saez, a strategic product marketing leader.
+
+## What "AI slop" means here
+Content that was generated fast and published without an edit pass: generic voice, repetitive structure, hollow claims with no specifics behind them.
+
+## What the service does
+- Audits existing content (site copy, landing pages, marketing collateral) to flag where it reads as generic or AI-generated.
+- Diagnoses whether the root cause is voice, process, or a deeper strategy/positioning problem.
+- Rewrites/edits copy into the client's actual brand voice.
+- Works for both in-house marketing teams and agencies doing a pre-delivery quality pass.
+- Works on human-written and AI-written content alike; the diagnosis is about how the copy reads, not who or what drafted it.
+
+## Who runs it
+Andrea Saez is a strategic product marketing leader with 15 years of experience helping B2B SaaS companies bridge the gap between product adoption and market growth. She specializes in building PMM functions from zero, strategic repositioning, and building a Marketing AI Operations layer (networks of interconnected AI agents and automated workflows for GTM execution). She also built Forma (getforma.co), a GTM intelligence product, and co-authored The Product Momentum Gap.
+
+## Key page
+- Homepage, full FAQ, and contact form: https://fixyourslop.ai/
