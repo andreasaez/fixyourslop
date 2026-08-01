@@ -52,7 +52,7 @@
           '<span class="egg-dot egg-dot-r"></span>' +
           '<span class="egg-dot egg-dot-y"></span>' +
           '<span class="egg-dot egg-dot-g"></span>' +
-          '<span class="egg-title">unicorn.exe</span>' +
+          '<span class="egg-title">havefun.exe</span>' +
           '<button class="egg-close" aria-label="Close">x</button>' +
         '</div>' +
         '<div class="egg-body">' +
