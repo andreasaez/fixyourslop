@@ -6744,14 +6744,15 @@
   function positionLogoOverlay(item) {
     var overlay = item.querySelector(".logo-overlay");
     if (!overlay) return;
-    item.style.setProperty("--overlay-shift", "0px");
+    var baseShift = parseFloat(item.dataset.overlayOffset || "0");
+    item.style.setProperty("--overlay-shift", baseShift + "px");
     var margin = 16;
     var rect = overlay.getBoundingClientRect();
-    var shift = 0;
+    var shift = baseShift;
     if (rect.left < margin) {
-      shift = margin - rect.left;
+      shift += margin - rect.left;
     } else if (rect.right > window.innerWidth - margin) {
-      shift = window.innerWidth - margin - rect.right;
+      shift += window.innerWidth - margin - rect.right;
     }
     item.style.setProperty("--overlay-shift", shift + "px");
   }
