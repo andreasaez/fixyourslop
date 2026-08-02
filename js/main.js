@@ -101,6 +101,63 @@ if (contactForm) {
   });
 }
 
+var logoItems = document.querySelectorAll('.logo-item');
+var supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+function positionLogoOverlay(item) {
+  var overlay = item.querySelector('.logo-overlay');
+  if (!overlay) return;
+  item.style.setProperty('--overlay-shift', '0px');
+  var margin = 16;
+  var rect = overlay.getBoundingClientRect();
+  var shift = 0;
+  if (rect.left < margin) {
+    shift = margin - rect.left;
+  } else if (rect.right > window.innerWidth - margin) {
+    shift = (window.innerWidth - margin) - rect.right;
+  }
+  item.style.setProperty('--overlay-shift', shift + 'px');
+}
+
+logoItems.forEach(function (item) {
+  item.addEventListener('mouseenter', function () { positionLogoOverlay(item); });
+  item.addEventListener('focusin', function () { positionLogoOverlay(item); });
+});
+
+window.addEventListener('resize', function () {
+  logoItems.forEach(function (item) {
+    if (item.classList.contains('is-active') || item.matches(':hover')) {
+      positionLogoOverlay(item);
+    }
+  });
+});
+
+if (logoItems.length && !supportsHover) {
+  logoItems.forEach(function (item) {
+    var link = item.querySelector('a');
+    if (!link) return;
+
+    link.addEventListener('click', function (e) {
+      if (!item.classList.contains('is-active')) {
+        e.preventDefault();
+        logoItems.forEach(function (other) {
+          if (other !== item) other.classList.remove('is-active');
+        });
+        positionLogoOverlay(item);
+        item.classList.add('is-active');
+      }
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.logo-item')) {
+      logoItems.forEach(function (item) {
+        item.classList.remove('is-active');
+      });
+    }
+  });
+}
+
 if ('IntersectionObserver' in window) {
   var observer = new IntersectionObserver(
     function (entries) {
