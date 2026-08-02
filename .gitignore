@@ -7,5 +7,14 @@
 /slopstatic.png
 /usersnap.png
 
+# Environment
+.env
+
+# Dependencies
+node_modules/
+
+# Claude Code local config
+.claude/
+
 # macOS
 .DS_Store

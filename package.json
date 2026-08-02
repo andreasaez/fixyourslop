@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "build": "node -e \"require('dotenv').config(); const env = (name) => process.env[name] ? JSON.stringify(process.env[name]) : 'undefined'; require('esbuild').buildSync({ entryPoints: ['js/main.js'], bundle: true, outfile: 'js/main.bundle.js', define: { 'process.env.POSTHOG_PROJECT_TOKEN': env('POSTHOG_PROJECT_TOKEN'), 'process.env.POSTHOG_HOST': env('POSTHOG_HOST') } })\""
+  },
+  "dependencies": {
+    "posthog-js": "^1.409.5"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2",
+    "esbuild": "^0.28.1"
+  }
+}

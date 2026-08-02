@@ -1,4 +1,27 @@
+import posthog from 'posthog-js';
+
 document.documentElement.classList.add('js');
+
+var posthogToken = process.env.POSTHOG_PROJECT_TOKEN;
+var posthogHost = process.env.POSTHOG_HOST;
+var posthogReady = false;
+
+if (posthogToken && posthogHost) {
+  posthog.init(posthogToken, {
+    api_host: posthogHost,
+    defaults: '2026-01-30',
+    capture_exceptions: true
+  });
+  posthogReady = true;
+} else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  throw new Error('POSTHOG_PROJECT_TOKEN and POSTHOG_HOST variables required by PostHog are missing or un-configured, this causes events to be silently missed. This error stops appearing once POSTHOG_PROJECT_TOKEN and POSTHOG_HOST are configured');
+}
+
+function captureEvent(event, properties) {
+  if (posthogReady) {
+    posthog.capture(event, properties);
+  }
+}
 
 var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -25,6 +48,14 @@ if (navToggle && primaryNav) {
   });
 }
 
+document.querySelectorAll('a[href="#contact"]').forEach(function (link) {
+  link.addEventListener('click', function () {
+    captureEvent('contact_cta_clicked', {
+      cta_location: link.closest('.hero-actions') ? 'hero' : 'navigation'
+    });
+  });
+});
+
 var contactForm = document.getElementById('contactForm');
 if (contactForm) {
   var statusEl = contactForm.querySelector('.form-status');
@@ -44,15 +75,22 @@ if (contactForm) {
     })
       .then(function (response) {
         if (response.ok) {
+          captureEvent('contact_form_submitted');
           statusEl.textContent = "Got it. We'll be in touch soon.";
           statusEl.className = 'form-status success';
           contactForm.reset();
         } else {
+          captureEvent('contact_form_submission_failed', {
+            failure_type: 'response_error'
+          });
           statusEl.textContent = 'Something went wrong. Try again, or email hello@fixyourslop.ai directly.';
           statusEl.className = 'form-status error';
         }
       })
       .catch(function () {
+        captureEvent('contact_form_submission_failed', {
+          failure_type: 'network_error'
+        });
         statusEl.textContent = 'Something went wrong. Try again, or email hello@fixyourslop.ai directly.';
         statusEl.className = 'form-status error';
       })
