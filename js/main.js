@@ -6,11 +6,37 @@ var posthogToken = process.env.POSTHOG_PROJECT_TOKEN;
 var posthogHost = process.env.POSTHOG_HOST;
 var posthogReady = false;
 
+// posthog-js manufactures a synthetic $exception from any non-Error promise
+// rejection on the page, including ones thrown by browser extensions and
+// embedded webviews we don't control. Outlook's desktop client injects a JS
+// bridge when it previews a link, and its rejection value
+// ("Object Not Found Matching Id:..., MethodName:update, ParamCount:4") gets
+// captured and fingerprinted as if it were our bug. Drop that known-noise
+// shape only — match the value signature rather than blanket-dropping every
+// frameless/synthetic exception, so genuine minified or cross-origin errors
+// still get through.
+function isThirdPartyRejectionNoise(cr) {
+  if (!cr || cr.event !== '$exception') return false;
+  var exceptions = cr.properties && cr.properties.$exception_list;
+  if (!Array.isArray(exceptions)) return false;
+  return exceptions.some(function (ex) {
+    var mechanism = ex && ex.mechanism;
+    if (!mechanism || mechanism.synthetic !== true) return false;
+    var value = ex && ex.value;
+    return typeof value === 'string' &&
+      value.indexOf('Object Not Found Matching Id') !== -1 &&
+      value.indexOf('MethodName:update') !== -1;
+  });
+}
+
 if (posthogToken && posthogHost) {
   posthog.init(posthogToken, {
     api_host: posthogHost,
     defaults: '2026-01-30',
-    capture_exceptions: true
+    capture_exceptions: true,
+    before_send: function (cr) {
+      return isThirdPartyRejectionNoise(cr) ? null : cr;
+    }
   });
   posthogReady = true;
 } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
