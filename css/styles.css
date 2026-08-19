@@ -38,6 +38,7 @@
 html{ scroll-behavior: smooth; }
 body{
   margin: 0;
+  overflow-x: hidden;
   background:
     radial-gradient(ellipse 700px 500px at 6% 4%, rgba(245,175,206,.55), transparent 65%),
     radial-gradient(ellipse 640px 480px at 94% 14%, rgba(63,214,214,.45), transparent 65%),
@@ -102,6 +103,9 @@ ul, ol{ margin: 0; padding: 0; }
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .btn-ghost:hover{ background: var(--ink); color: var(--paper); }
+.btn-dark{ background: var(--ink); color: var(--paper); border-color: var(--ink); box-shadow: 0 8px 22px rgba(26,26,26,.25); }
+.btn-dark:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(26,26,26,.32); }
+.btn-dark:active{ transform: scale(.96); box-shadow: 0 4px 12px rgba(26,26,26,.22); }
 .btn-small{ padding: .55em 1.2em; font-size: .9rem; }
 .btn-large{ padding: 1em 2.2em; font-size: 1.05rem; }
 
@@ -126,11 +130,14 @@ ul, ol{ margin: 0; padding: 0; }
 .nav-toggle span{ width: 22px; height: 2px; background: var(--ink); border-radius: 2px; }
 
 /* ---------- Hero ---------- */
-.hero{ padding-block: 72px 96px; overflow: hidden; }
+.hero{ padding-block: 72px 96px; }
 .hero-inner{ display: grid; grid-template-columns: 1.15fr 1fr; align-items: center; gap: 56px; }
 .hero h1{ font-size: clamp(2.3rem, 4.4vw, 3.5rem); font-weight: 700; letter-spacing: .005em; }
 .hero-sub{ font-size: 1.15rem; color: var(--ink-soft); max-width: 46ch; }
 .hero-actions{ display: flex; flex-wrap: wrap; gap: 16px; margin-top: 1.5em; }
+.hero-logos{ margin-top: 3.2em; text-align: center; }
+.hero-logos .logos-label{ margin: 0 0 1em; }
+.hero-logos .logo-row{ justify-content: center; }
 
 /* ---------- Kicker signature ---------- */
 .kicker-signature{ display: flex; align-items: flex-end; gap: 12px; margin-bottom: 1.6em; }
@@ -171,7 +178,7 @@ ul, ol{ margin: 0; padding: 0; }
 .section-lede{ font-size: 1.1rem; color: var(--ink-soft); max-width: 60ch; }
 
 /* ---------- Problem cards: sticky stack ---------- */
-.card-stack{ display: flex; flex-direction: column; margin-top: 2.5em; padding-bottom: 200px; }
+.card-stack{ display: flex; flex-direction: column; margin-top: 2.5em; padding-bottom: 60px; }
 .card{
   display: flex; align-items: flex-start; gap: 28px;
   background: var(--glass-bg); border: 2px solid rgba(255,255,255,.8); border-radius: 22px;
@@ -255,6 +262,16 @@ ul, ol{ margin: 0; padding: 0; }
 .about-copy strong{ color: var(--ink); }
 .about-copy a{ color: var(--pink-ink); text-decoration: underline; text-underline-offset: 2px; }
 .about-copy a:hover{ color: var(--ink); }
+.about-actions{ display: flex; flex-wrap: wrap; gap: 16px; margin-top: 1.5em; }
+.about-actions .btn{ text-decoration: none; }
+.about-actions .btn-dark{ color: var(--paper); }
+.about-actions .btn-dark:hover{ color: var(--paper); }
+.about-actions .btn-ghost{ color: var(--ink); }
+.about-actions .btn-ghost:hover{
+  background: rgba(255,255,255,.35); color: var(--ink);
+  transform: translateY(-2px); box-shadow: 0 12px 28px rgba(26,26,26,.18);
+}
+.about-actions .btn-ghost:active{ transform: scale(.96); box-shadow: 0 4px 12px rgba(26,26,26,.12); }
 
 .logos-label{ font-weight: 700; font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin: 1.6em 0 1em; max-width: none; }
 .logos-label-hint{ font-weight: 400; text-transform: none; letter-spacing: normal; }
@@ -286,7 +303,7 @@ ul, ol{ margin: 0; padding: 0; }
   width: 230px; max-width: calc(100vw - 32px);
   background: var(--glass-bg-strong); border: 1px solid var(--glass-border); border-radius: var(--radius-md);
   backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
-  padding: 16px 18px; margin-top: 12px; box-shadow: var(--glass-shadow-hover);
+  padding: 16px 18px; margin-top: 12px; box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 12px 28px rgba(58,44,26,.14);
   opacity: 0; visibility: hidden; pointer-events: none;
   transition: opacity .16s ease, transform .16s ease;
   z-index: 20; text-align: left;
@@ -398,5 +415,5 @@ ul, ol{ margin: 0; padding: 0; }
   .step-list{ grid-template-columns: 1fr; }
 
   .section{ padding-block: 56px; }
-  .card-stack{ padding-bottom: 100px; }
+  .card-stack{ padding-bottom: 40px; }
 }
