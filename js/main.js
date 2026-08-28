@@ -8,7 +8,8 @@ var posthogReady = false;
 
 if (posthogToken && posthogHost) {
   posthog.init(posthogToken, {
-    api_host: posthogHost,
+    api_host: '/ingest',
+    ui_host: posthogHost.replace('.i.posthog.com', '.posthog.com'),
     defaults: '2026-01-30',
     capture_exceptions: true
   });
